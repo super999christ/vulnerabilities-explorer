@@ -1,9 +1,14 @@
+// import external dependencies
+import axios from 'axios';
 import { useState } from 'react';
-import './App.css';
+
+// import local dependencies
 import Spinner from './components/Spinner';
 import CvssScore from './components/CvssScore';
-import axios from 'axios';
 import { Environment } from './constants/base';
+
+// import css dependencies
+import './App.css';
 
 interface IVulnerability {
   id: number;
@@ -24,7 +29,7 @@ function App() {
       const { data } = await axios.get(`${Environment.SERVER_BASE_URL}/api/vulnerabilities`);
       setVulnerabilities(data.slice(0, 100));
     } catch (err) {
-      console.log("Error while fetching data: ", err);
+      console.error("Error while fetching data: ", err);
       alert("Something went wrong.");
     } finally {
       setLoading(false);
@@ -32,9 +37,9 @@ function App() {
   };
 
   return (
-    <div className='App max-sm:px-0'>
+    <main className='App max-sm:px-0'>
       <div className='flex flex-col justify-center h-full'>
-        <main className='min-w-[400px] max-w-full md:min-w-[600px] lg:min-w-[800px] min-h-[600px] border rounded-xl border-solid bg-gray-900 m-auto p-4 overflow-auto'>
+        <div className='min-w-[400px] max-w-full md:min-w-[600px] lg:min-w-[800px] min-h-[600px] border rounded-xl border-solid bg-gray-900 m-auto p-4 overflow-auto'>
           <div className='flex justify-center'>
             <button
               className='w-[200px] bg-green-500 hover:bg-green-700 disabled:bg-green-200 h-10 rounded-md flex justify-center items-center gap-1'
@@ -94,9 +99,9 @@ function App() {
               </tbody>
             </table>
           </div>
-        </main>
+        </div>
       </div>
-    </div>
+    </main>
   );
 }
 

@@ -107,14 +107,11 @@ func VulnerabilitiesHandler(w http.ResponseWriter, r *http.Request) {
 
 	// Construct the URL and fetch the data
 	url := fmt.Sprintf("https://services.nvd.nist.gov/rest/json/cves/2.0/?pubStartDate=%s&pubEndDate=%s", pubStartDate, pubEndDate)
-	log.Println("URL: ", url)
 	resp, err := http.Get(url)
 	if err != nil {
 		log.Fatalln("Failed to retrieve data: ", err)
 	}
 	defer resp.Body.Close()
-
-	log.Print("Data: ", resp.Body)
 
 	var data VulnrResponse
 	err = json.NewDecoder(resp.Body).Decode(&data)
@@ -138,8 +135,6 @@ func VulnerabilitiesHandler(w http.ResponseWriter, r *http.Request) {
 		} else if len(vulnerability.Cve.Metrics.CvssMetricV31) > 0 {
 			cvssScore = vulnerability.Cve.Metrics.CvssMetricV31[0].CvssData.BaseScore
 		}
-
-		log.Println("Adding a record: ", cveID, published, description, status, cvssScore)
 
 		_, err = tx.Exec("SELECT add_vulnerability($1, $2, $3, $4, $5)", cveID, published, description, status, cvssScore)
 		if err != nil {
