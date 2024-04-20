@@ -1,11 +1,11 @@
 import { CircularProgressbarWithChildren, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 
-interface Props {
+interface ICvssScoreProps {
   score: number;
 };
 
-export default function CvssScore({ score }: Props) {
+export default function CvssScore({ score }: ICvssScoreProps) {
   const getPathColor = () => {
     if (score >= 7.5)
       return '#EE2222';
