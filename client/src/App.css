@@ -47,9 +47,6 @@ body {
   }
 }
 
-.CircularProgressbar-path {
-  @apply !stroke-red-600;
-}
 .CircularProgressbar-trail {
   stroke: gray;
 }
